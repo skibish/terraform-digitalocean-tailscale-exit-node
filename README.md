@@ -2,6 +2,12 @@
 
 This is an example of how Tailscale Exit Node can be provisioned in Digital Ocean with help of the Terraform.
 
+Docs are generated with:
+
+```sh
+terraform-docs markdown table --output-file README.md --output-mode inject .
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -35,7 +41,7 @@ No modules.
 | <a name="input_do_token"></a> [do\_token](#input\_do\_token) | Digital Ocean Read & Write token (https://cloud.digitalocean.com/account/api/tokens). | `string` | n/a | yes |
 | <a name="input_ssh_key"></a> [ssh\_key](#input\_ssh\_key) | Path to SSH Key file (e.g. $HOME/.ssh/id). | `string` | n/a | yes |
 | <a name="input_ssh_key_pub"></a> [ssh\_key\_pub](#input\_ssh\_key\_pub) | Path to SSH Public Key file (e.g. $HOME/.ssh/id.pub). | `string` | n/a | yes |
-| <a name="input_tailscale_key"></a> [tailscale\_key](#input\_tailscale\_key) | Tailscale key (https://login.tailscale.com/admin/settings/keys). | `string` | n/a | yes |
+| <a name="input_tailscale_key"></a> [tailscale\_key](#input\_tailscale\_key) | Tailscale Auth Key (https://login.tailscale.com/admin/settings/keys). | `string` | n/a | yes |
 
 ## Outputs
 

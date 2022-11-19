@@ -4,7 +4,7 @@ variable "do_token" {
 }
 
 variable "tailscale_key" {
-  description = "Tailscale key (https://login.tailscale.com/admin/settings/keys)."
+  description = "Tailscale Auth Key (https://login.tailscale.com/admin/settings/keys)."
   type        = string
 }
 
