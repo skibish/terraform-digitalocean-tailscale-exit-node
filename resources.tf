@@ -10,7 +10,7 @@ resource "digitalocean_ssh_key" "main" {
 
 # Create a new Droplet
 resource "digitalocean_droplet" "main" {
-  image    = "ubuntu-22-10-x64"
+  image    = "debian-12-x64"
   name     = "tailscale-xn-001"
   region   = "ams3"
   size     = "s-1vcpu-1gb"
@@ -27,15 +27,17 @@ resource "digitalocean_droplet" "main" {
   # Install and configure tailscale
   provisioner "remote-exec" {
     inline = [
-      # https://tailscale.com/download/linux/ubuntu-2204
-      "curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null",
-      "curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list",
-      "sudo apt update -y",
-      "sudo apt install tailscale -y",
+      # wait for other droplet initial processes to finish",
+      "sleep 20",
+      # https://tailscale.com/download/linux/debian-bookworm
+      "curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null",
+      "curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list",
+      "sudo apt-get update -y",
+      "sudo apt-get install tailscale -y",
       # https://tailscale.com/kb/1103/exit-nodes/#configuring-an-exit-node
-      "echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.conf",
-      "echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.conf",
-      "sudo sysctl -p /etc/sysctl.conf",
+      "echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf",
+      "echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf",
+      "sudo sysctl -p /etc/sysctl.d/99-tailscale.conf",
       "sudo tailscale up --advertise-exit-node --authkey=${var.tailscale_key}"
     ]
   }
