@@ -1,6 +1,7 @@
 # Tailscale Exit Node provisioning in Digital Ocean
 
 This is an example of how Tailscale Exit Node can be provisioned in Digital Ocean with help of the Terraform.
+Complimentary [blog post](https://sergeykibish.com/blog/tailscale-based-vpn-on-digitalocean-droplet).
 
 Docs are generated with:
 
